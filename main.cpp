@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void print_arena(char arena[ARENA_SIZE][ARENA_SIZE]) {
+void print_arena(char (*arena)[ARENA_SIZE]) {
 	cout << "ARENA" << endl;
     for (int i = 0; i < ARENA_SIZE; i++) {
         for (int j = 0; j < ARENA_SIZE; j++) {
@@ -24,6 +24,7 @@ int main() {
                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
                {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}};
-    print_arena(arena);
+
+    print_arena(&arena[0]);
     return 0;
 }
