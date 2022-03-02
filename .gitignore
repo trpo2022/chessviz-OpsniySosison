@@ -1,2 +1,14 @@
 
+# program compilation files
+
+chessviz.o
+main.o
+parser.o
+master
+chessviz.d
+parser.d
+main.d
+
+# visual studio working files
+
 .vs/

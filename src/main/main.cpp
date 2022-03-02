@@ -1,21 +1,7 @@
-#include <iostream>
-
-#define ARENA_SIZE 8
-
-using namespace std;
-
-void print_arena(char (*arena)[ARENA_SIZE]) {
-	cout << "ARENA:" << endl;
-    for (int i = 0; i < ARENA_SIZE; i++) {
-        for (int j = 0; j < ARENA_SIZE; j++) {
-            cout << arena[i][j];
-		}
-		cout << endl;
-	}
-}
+#include "../lib/chessviz.h"
 
 int main() {
-    char arena[ARENA_SIZE][ARENA_SIZE]
+    char arena[ARENA_SIZE][ARENA_SIZE] // game arena
             = {{'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
                {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
