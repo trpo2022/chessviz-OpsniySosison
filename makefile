@@ -11,11 +11,11 @@ COMPILE = obj/main/main.o obj/lib/chessviz.o obj/lib/parser.o
 
 master: $(COMPILE)
 	g++ $(COMPILE) -o $@ 
-main.o: $(MAIN)
-	g++ -c $(FILEFLAG) $(CFLAGS) $(CPPFLAGS) -o obj/main/$@ $(MAIN) 
-chessviz.o: $(CHESSVIZ)
-	g++ -c $(FILEFLAG) $(CFLAGS) $(CPPFLAGS) -o obj/lib/$@ $(CHESSVIZ) 
-parser.o: $(PARSER)
-	g++ -c $(FILEFLAG) $(CFLAGS) $(CPPFLAGS) -o obj/lib/$@ $(PARSER)
+obj/main/main.o: $(MAIN)
+	g++ -c $(FILEFLAG) $(CFLAGS) $(CPPFLAGS) -o $@ $(MAIN) 
+obj/lib/chessviz.o: $(CHESSVIZ)
+	g++ -c $(FILEFLAG) $(CFLAGS) $(CPPFLAGS) -o $@ $(CHESSVIZ) 
+obj/lib/parser.o: $(PARSER)
+	g++ -c $(FILEFLAG) $(CFLAGS) $(CPPFLAGS) -o $@ $(PARSER)
 
 -include parser.d chessviz.d main.d
