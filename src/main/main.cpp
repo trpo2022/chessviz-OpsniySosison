@@ -1,4 +1,4 @@
-#include "../lib/chessviz.h"
+#include "lib/chessviz.h"
 
 int main() {
     char arena[ARENA_SIZE][ARENA_SIZE] // game arena

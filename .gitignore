@@ -12,3 +12,7 @@ main.d
 # visual studio working files
 
 .vs/
+
+# input data files
+
+inputdata
