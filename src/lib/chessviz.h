@@ -3,30 +3,49 @@
 #include <string>
 #include <fstream>
 #include <cstring>
+#include <cctype>
+#include <cmath>
 
 #define ARENA_SIZE 8
 
 using namespace std;
 
-struct defoltTurn {
-    size_t iStart;
-    size_t iEnd;
-    size_t jStart;
-    size_t jEnd;
+struct partturn {
+    int i;
+    int j;
+};
+
+struct defaultTurn {
+    partturn start;
+    partturn end;
     char figureType = ' ';
     char turnType = ' ';
 };
 
 struct turn {
-    defoltTurn wTurn;
-    defoltTurn bTurn;
+    defaultTurn wTurn;
+    defaultTurn bTurn;
 };
 
-const char figureType[] = {'K', 'k', 'Q', 'q', 'R', 'N', 'n', 'B', 'b', '\0'};
+const char figureType[] = {'K', 'Q', 'R', 'N', 'B', 'P', '\0'};
 
-void print_arena(char (*arena)[ARENA_SIZE]);
-turn parser(string str);
-char* parseWhiteTurn(char* cursor, turn& turn);
-char* parseBlackTurn(char* cursor, turn& turn);
-char* parseStart(char* cursor, defoltTurn& turn);
-char* parseEnd(char* cursor, defoltTurn& turn);
+//parser functions
+
+int parser(string stroke, turn& turn);
+char* parseFullTurn(char* cursor, defaultTurn& turn);
+char* parsePartTurn(char* cursor, partturn& turn);
+bool checkCoordinateX(char* cursor, int& j);
+bool checkCoordinateY(char* cursor, int& _i);
+char* parseFigureType(char* cursor, defaultTurn& turn);
+char* parseTurnType(char* cursor, defaultTurn& turn);
+char* skipSpace(char* cursor);
+
+//chessviz functions
+
+void print_arena(char arena[ARENA_SIZE][ARENA_SIZE]);
+int do_turn(defaultTurn turn, char (*arena)[ARENA_SIZE]);
+bool check_corr_figureType(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
+bool check_corr_turnType(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
+bool check_corr_turnLength(defaultTurn turn);
+bool check_corr(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
+bool check_corr_border(defaultTurn turn);

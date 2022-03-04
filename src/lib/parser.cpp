@@ -1,190 +1,158 @@
 #include "chessviz.h"
 
-turn parser(string stroke)
+int parser(string stroke, turn& turn)
 {
-    turn turn;
     char* str = new char[stroke.length() + 1];
     char* cursor = str;
     str = strcpy(str, stroke.c_str());
 
-    while (*cursor == ' ') {
-        cursor++;
-    }
+    cursor = skipSpace(cursor);
 
     cursor += 2;
 
-    while (*cursor == ' ') {
-        cursor++;
+    cursor = skipSpace(cursor);
+
+    cursor = parseFullTurn(cursor, turn.wTurn);
+
+    if (cursor == NULL) {
+        cout << str << endl;
+        return 2;
     }
 
-    cursor = parseWhiteTurn(cursor, turn);
-    cursor = parseBlackTurn(cursor, turn);
+    if (*cursor != ' ' && *cursor != '+' && *cursor != '#' ) {
+        cout << "expected space, but given '" << *cursor << "' " << endl;
+        cout << str << endl;
+        return 2;
+    } 
 
-    return turn;
+    cursor = skipSpace(cursor);
+
+    if (*cursor == '#') {
+        return 3;
+    }
+
+    cursor = parseFullTurn(cursor, turn.bTurn);
+
+    if (cursor == NULL) {
+        cout << str << endl;
+        return 2;
+    }
+
+    if (*cursor == '#') {
+        return 4;
+    }
+
+    return 0;
 }
 
-char* parseWhiteTurn(char* cursor, turn& turn)
+char* parseFullTurn(char* cursor, defaultTurn& turn)
 {
-    defoltTurn defoltTurn;
 
-    if (strchr(figureType, *cursor)) {
-        defoltTurn.figureType = *cursor;
-        cursor++;
-    } else {
-        defoltTurn.figureType = 'p';
-    }
+    cursor = parseFigureType(cursor, turn);
 
-    cursor = parseStart(cursor, defoltTurn);
+    cursor = parsePartTurn(cursor, turn.start);
 
-    if (*cursor == '-') {
-        defoltTurn.turnType = '-';
-    } else if (*cursor == 'x') {
-        defoltTurn.turnType = 'x';
-    } else {
-        cout << "unknown character in parseWhiteTurn" << endl;
+    if (cursor == NULL) {
         return NULL;
     }
-    cursor++;
 
-    cursor = parseEnd(cursor, defoltTurn);
-   
-    while (*cursor == ' ') {
-        cursor++;
+    cursor = parseTurnType(cursor, turn);
+
+    if (cursor == NULL) {
+        return NULL;
     }
 
-    turn.wTurn = defoltTurn;
+    cursor = parsePartTurn(cursor, turn.end);
+
+    if (cursor == NULL) {
+        return NULL;
+    }
+
     return cursor;
 }
 
-char* parseBlackTurn(char* cursor, turn& turn) 
+char* parsePartTurn(char* cursor, partturn& turn)
 {
-    defoltTurn defoltTurn;
-
-    if (strchr(figureType, *cursor)) {
-        defoltTurn.figureType = *cursor;
-        cursor++;
-    }
-
-    cursor = parseStart(cursor, defoltTurn);
-
-    if (*cursor == '-') {
-        defoltTurn.turnType = '-';
-    } else if (*cursor == 'x') {
-        defoltTurn.turnType = 'x';
-    } else {
-        cout << "unknown character in parseBlackTurn" << endl;
+    if (!checkCoordinateX(cursor, turn.j)) {
         return NULL;
     }
+
     cursor++;
 
-    cursor = parseEnd(cursor, defoltTurn);
+    if (!checkCoordinateY(cursor, turn.i)) {
 
-    turn.bTurn = defoltTurn;
+        return NULL;
+    }
+
+    cursor++;
+
     return cursor;
 }
 
-char* parseStart(char* cursor, defoltTurn& turn)
+bool checkCoordinateX(char* cursor, int& j)
 {
-    switch (*cursor) {
-    case 'a':
-        turn.jStart = 0;
-        break;
-    case 'b':
-        turn.jStart = 1;
-        break;
-    case 'c':
-        turn.jStart = 2;
-        break;
-    case 'd':
-        turn.jStart = 3;
-        break;
-    case 'e':
-        turn.jStart = 4;
-        break;
-    case 'f':
-        turn.jStart = 5;
-        break;
-    case 'g':
-        turn.jStart = 6;
-        break;
-    case 'h':
-        turn.jStart = 7;
-        break;
-    default:
-        cout << "error in parseStart" << endl;
-        return NULL;
+    int temp = 0;
+    for (int i = 'a'; i <= 'z'; i++) {
+        if (i == *cursor) {
+            j = temp;
+            return true;
+        }
+        temp++;
     }
+    cout << "expected letter, but given '" << *cursor << "' " << endl;
+    return false;
+}
 
-    cursor++;
-
+bool checkCoordinateY(char* cursor, int& _i)
+{
     int i;
     try {
         i = stoi(cursor);
     } catch (const exception&) {
-        cout << "not a number";
-        return NULL;
-    }
-    
-    if (i > 8 || i < 0) {
-        cout << "going out of bounds" << endl;
-        return NULL;
+        cout << "expected number, but given '" << *cursor << "' " << endl;
+        return false;
     }
 
-    turn.iStart = i;
-    cursor++;
+    _i = i - 1;
+
+    return true;
+}
+
+char* parseFigureType(char* cursor, defaultTurn& turn)
+{
+    if (strchr(figureType, toupper(*cursor))) {
+        turn.figureType = *cursor;
+        cursor++;
+    } else {
+        turn.figureType = 'P';
+    }
 
     return cursor;
 }
 
-char* parseEnd(char* cursor, defoltTurn& turn)
+char* parseTurnType(char* cursor, defaultTurn& turn)
 {
-    switch (*cursor) {
-    case 'a':
-        turn.jEnd = 0;
-        break;
-    case 'b':
-        turn.jEnd = 1;
-        break;
-    case 'c':
-        turn.jEnd = 2;
-        break;
-    case 'd':
-        turn.jEnd = 3;
-        break;
-    case 'e':
-        turn.jEnd = 4;
-        break;
-    case 'f':
-        turn.jEnd = 5;
-        break;
-    case 'g':
-        turn.jEnd = 6;
-        break;
-    case 'h':
-        turn.jEnd = 7;
-        break;
-    default:
-        cout << "error in parseEnd" << endl;
+    if (*cursor == '-') {
+        turn.turnType = '-';
+    } else if (*cursor == 'x') {
+        turn.turnType = 'x';
+    } else {
+        cout << "expected move type (x or -), but given '" << *cursor << "' "
+             << endl;
+        ;
         return NULL;
     }
 
-    cursor++;
+     cursor++;
 
-    int i;
-    try {
-        i = stoi(cursor);
-    } catch (const exception&) {
-        cout << "not a number";
-        return NULL;
+    return cursor;
+}
+
+char* skipSpace(char* cursor)
+{
+    while (*cursor == ' ') {
+        cursor++;
     }
-
-    if (i > ARENA_SIZE || i < 0) {
-        cout << "going out of bounds" << endl;
-        return NULL;
-    }
-
-    turn.iEnd = i;
-    cursor++;
 
     return cursor;
 }
