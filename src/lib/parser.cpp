@@ -25,11 +25,11 @@ int parser(string stroke, turn& turn)
         return 2;
     } 
 
-    cursor = skipSpace(cursor);
-
     if (*cursor == '#') {
         return 3;
     }
+
+    cursor = skipSpace(cursor);
 
     cursor = parseFullTurn(cursor, turn.bTurn);
 

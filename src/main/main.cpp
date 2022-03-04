@@ -38,11 +38,10 @@ int main()
                          << " line" << endl;
                     return 2;
                 }
+            } else if (code_return_parser == 4) {
+                cout << "Black winner!" << endl;
             } else {
                 cout << "White winner!" << endl;
-            }
-            if (code_return_parser == 4) {
-                cout << "Black winner!" << endl;
             }
             num__line++;
         }
