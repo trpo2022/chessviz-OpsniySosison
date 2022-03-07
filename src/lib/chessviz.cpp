@@ -11,7 +11,7 @@ void print_arena(char arena[ARENA_SIZE][ARENA_SIZE])
     cout << "--------" << endl;
 }
 
-int make_a_turn(turn turn, int code_parse = 0, int num__line = -1)
+int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int code_parse, int num__line)
 {
     if (do_turn(turn.wTurn, &arena[0]) != 0) {
         cout << "whites correct move error in " << num__line << " line" << endl;
@@ -28,6 +28,8 @@ int make_a_turn(turn turn, int code_parse = 0, int num__line = -1)
     } else {
         cout << "White winner!" << endl;
     }
+
+    return 0;
 }
 
 int do_turn(defaultTurn turn, char (*arena)[ARENA_SIZE])

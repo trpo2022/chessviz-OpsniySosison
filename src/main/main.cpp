@@ -27,7 +27,7 @@ int main()
                 cout << "input data error in " << num__line << " line" << endl;
                 return 1;
             }
-            make_a_turn(turn, code_return_parser, num__line);
+            make_a_turn(turn, &arena[0], code_return_parser, num__line);
             num__line++;
         }
     } else {
