@@ -11,6 +11,25 @@ void print_arena(char arena[ARENA_SIZE][ARENA_SIZE])
     cout << "--------" << endl;
 }
 
+int make_a_turn(turn turn, int code_parse = 0, int num__line = -1)
+{
+    if (do_turn(turn.wTurn, &arena[0]) != 0) {
+        cout << "whites correct move error in " << num__line << " line" << endl;
+        return 2;
+    }
+    if (code_parse != 2) {
+        if (do_turn(turn.bTurn, &arena[0]) != 0) {
+            cout << "blacks correct move error in " << num__line << " line"
+                 << endl;
+            return 2;
+        }
+    } else if (code_parse == 3) {
+        cout << "Black winner!" << endl;
+    } else {
+        cout << "White winner!" << endl;
+    }
+}
+
 int do_turn(defaultTurn turn, char (*arena)[ARENA_SIZE])
 {
     if (!check_corr(turn, arena)) {
@@ -99,7 +118,7 @@ bool check_corr_border(defaultTurn turn)
 {
     if (turn.end.i > ARENA_SIZE || turn.end.j > ARENA_SIZE
         || turn.start.i > ARENA_SIZE || turn.start.j > ARENA_SIZE) {
-        cout << "attempt to go out of bounds";
+        cout << "attempt to go out of bounds" << endl;
         return false;
     }
 

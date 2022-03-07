@@ -49,3 +49,4 @@ bool check_corr_turnType(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_turnLength(defaultTurn turn);
 bool check_corr(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_border(defaultTurn turn);
+int make_a_turn(turn turn, int code_parse = 0, int num__line = -1);

@@ -16,17 +16,17 @@ int parser(string stroke, turn& turn)
 
     if (cursor == NULL) {
         cout << str << endl;
-        return 2;
+        return 1;
     }
 
     if (*cursor != ' ' && *cursor != '+' && *cursor != '#' ) {
         cout << "expected space, but given '" << *cursor << "' " << endl;
         cout << str << endl;
-        return 2;
+        return 1;
     } 
 
     if (*cursor == '#') {
-        return 3;
+        return 2;
     }
 
     cursor = skipSpace(cursor);
@@ -35,11 +35,11 @@ int parser(string stroke, turn& turn)
 
     if (cursor == NULL) {
         cout << str << endl;
-        return 2;
+        return 1;
     }
 
     if (*cursor == '#') {
-        return 4;
+        return 3;
     }
 
     return 0;
@@ -139,7 +139,6 @@ char* parseTurnType(char* cursor, defaultTurn& turn)
     } else {
         cout << "expected move type (x or -), but given '" << *cursor << "' "
              << endl;
-        ;
         return NULL;
     }
 
