@@ -11,22 +11,24 @@ void print_arena(char arena[ARENA_SIZE][ARENA_SIZE])
     cout << "--------" << endl;
 }
 
-int make_a_turn(turn turn, int code_parse = 0, int num__line = -1)
+int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int num__line)
 {
     if (do_turn(turn.wTurn, &arena[0]) != 0) {
         cout << "whites correct move error in " << num__line << " line" << endl;
+        return 1;
+    }
+    if (!check_winner(turn.wTurn)) {
+        cout << "White winner" << endl;
         return 2;
     }
-    if (code_parse != 2) {
-        if (do_turn(turn.bTurn, &arena[0]) != 0) {
-            cout << "blacks correct move error in " << num__line << " line"
-                 << endl;
-            return 2;
-        }
-    } else if (code_parse == 3) {
-        cout << "Black winner!" << endl;
-    } else {
-        cout << "White winner!" << endl;
+    if (do_turn(turn.bTurn, &arena[0]) != 0) {
+        cout << "blacks correct move error in " << num__line << " line"
+                << endl;
+        return 1;
+    }
+    if (!check_winner(turn.bTurn)) {
+        cout << "Black winner" << endl;
+        return 3;
     }
 }
 
@@ -123,4 +125,13 @@ bool check_corr_border(defaultTurn turn)
     }
 
     return true;
+}
+
+bool check_winner(defaultTurn turn)
+{
+    return turn.turnOutcome != '#';
+
+    //if (turn.turnOutcome == '#') {
+    //    return false;
+    //}
 }

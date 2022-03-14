@@ -20,6 +20,7 @@ struct defaultTurn {
     partturn end;
     char figureType = ' ';
     char turnType = ' ';
+    char turnOutcome = ' ';
 };
 
 struct turn {
@@ -38,6 +39,7 @@ bool checkCoordinateX(char* cursor, int& j);
 bool checkCoordinateY(char* cursor, int& _i);
 char* parseFigureType(char* cursor, defaultTurn& turn);
 char* parseTurnType(char* cursor, defaultTurn& turn);
+char* parseTurnOutcome(char* cursor, defaultTurn& turn);
 char* skipSpace(char* cursor);
 
 //chessviz functions
@@ -49,4 +51,5 @@ bool check_corr_turnType(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_turnLength(defaultTurn turn);
 bool check_corr(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_border(defaultTurn turn);
-int make_a_turn(turn turn, int code_parse = 0, int num__line = -1);
+int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int num__line);
+bool check_winner(defaultTurn turn);
