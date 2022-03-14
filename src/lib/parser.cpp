@@ -19,17 +19,11 @@ int parser(string stroke, turn& turn)
         return 1;
     }
 
-    if (*cursor != ' ' && *cursor != '+' && *cursor != '#' ) {
-        cout << "expected space, but given '" << *cursor << "' " << endl;
-        cout << str << endl;
-        return 1;
-    } 
+    cursor = parseTurnOutcome(cursor, turn.wTurn);
 
-    if (*cursor == '#') {
-        return 2;
+    if (turn.wTurn.turnOutcome == '#') {
+        return 0;
     }
-
-    cursor = skipSpace(cursor);
 
     cursor = parseFullTurn(cursor, turn.bTurn);
 
@@ -38,9 +32,7 @@ int parser(string stroke, turn& turn)
         return 1;
     }
 
-    if (*cursor == '#') {
-        return 3;
-    }
+    parseTurnOutcome(cursor, turn.bTurn);
 
     return 0;
 }
@@ -80,7 +72,6 @@ char* parsePartTurn(char* cursor, partturn& turn)
     cursor++;
 
     if (!checkCoordinateY(cursor, turn.i)) {
-
         return NULL;
     }
 
@@ -147,6 +138,24 @@ char* parseTurnType(char* cursor, defaultTurn& turn)
     return cursor;
 }
 
+char* parseTurnOutcome(char* cursor, defaultTurn& turn)
+{
+    if (*cursor == ' ') {
+        cursor++;
+    } else if (*cursor == '#') {
+        cursor++;
+        turn.turnOutcome = '#';
+    } else if (*cursor == '+') {
+        cursor++;
+        turn.turnOutcome = '+';
+    } else {
+        cout << "unknow turn outcome '" << *cursor << "' " << endl;
+        return NULL;
+    }
+
+    return cursor;
+}
+ 
 char* skipSpace(char* cursor)
 {
     while (*cursor == ' ') {

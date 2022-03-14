@@ -1,5 +1,13 @@
 #include "lib/chessviz.h"
 
+/*
+    ƒобавить в структуру полного хода (turn) исход хода. “ипо шах, мат, чтобы сделать определение победы в chessviz.cpp, а не в parser.cpp
+    Ёто будет не по китайски, а нормально и пон€тно.
+    :)
+
+    ѕроверка король под шахом чи нет - из входных данных. –окировка несложна€.
+*/
+
 int main()
 {
     char arena[ARENA_SIZE][ARENA_SIZE] // game arena
@@ -20,14 +28,13 @@ int main()
     print_arena(arena);
     if (data.is_open()) {
         while (getline(data, line)) {
-            int code_return_parser;
-            code_return_parser = parser(line, turn);
-            if (code_return_parser != 0 && code_return_parser != 2
-                && code_return_parser != 3) {
+            if (parser(line, turn) != 0) {
                 cout << "input data error in " << num__line << " line" << endl;
                 return 1;
             }
-            make_a_turn(turn, &arena[0], code_return_parser, num__line);
+            if (make_a_turn(turn, &arena[0], num__line) != 0) {
+                return 1;
+            }
             num__line++;
         }
     } else {
