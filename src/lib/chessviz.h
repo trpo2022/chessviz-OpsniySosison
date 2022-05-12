@@ -18,6 +18,7 @@ struct partturn {
 struct defaultTurn {
     partturn start;
     partturn end;
+    partturn startKingPos;
     char figureType = ' ';
     char turnType = ' ';
     char turnOutcome = ' ';
@@ -26,6 +27,15 @@ struct defaultTurn {
 struct turn {
     defaultTurn wTurn;
     defaultTurn bTurn;
+
+    turn()
+    {
+        wTurn.startKingPos.i = 0;
+        wTurn.startKingPos.j = 4;
+
+        bTurn.startKingPos.i = 7;
+        bTurn.startKingPos.j = 4;
+    }
 };
 
 const char figureType[] = {'K', 'Q', 'R', 'N', 'B', 'P', '\0'};
@@ -40,6 +50,8 @@ bool checkCoordinateY(char* cursor, int& _i);
 char* parseFigureType(char* cursor, defaultTurn& turn);
 char* parseTurnType(char* cursor, defaultTurn& turn);
 char* parseTurnOutcome(char* cursor, defaultTurn& turn);
+char* parseCastling(char* cursor, defaultTurn& turn);
+bool checkCoordinatesCastling(defaultTurn& turn, const int range);
 char* skipSpace(char* cursor);
 
 //chessviz functions

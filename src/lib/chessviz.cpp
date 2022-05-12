@@ -30,10 +30,17 @@ int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int num__line)
         cout << "Black winner" << endl;
         return 3;
     }
+    return 0;
 }
 
 int do_turn(defaultTurn turn, char (*arena)[ARENA_SIZE])
 {
+    if (turn.turnType == 'C') {
+        swap(arena[turn.start.i][turn.start.j], arena[turn.end.i][turn.end.j]);
+        print_arena(arena);
+        return 0;
+    }
+
     if (!check_corr(turn, arena)) {
         return 1;
     }

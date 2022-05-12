@@ -21,6 +21,11 @@ int parser(string stroke, turn& turn)
 
     cursor = parseTurnOutcome(cursor, turn.wTurn);
 
+    if (cursor == NULL) {
+        cout << str << endl;
+        return 1;
+    }
+
     if (turn.wTurn.turnOutcome == '#') {
         return 0;
     }
@@ -34,11 +39,27 @@ int parser(string stroke, turn& turn)
 
     parseTurnOutcome(cursor, turn.bTurn);
 
+    if (cursor == NULL) {
+        cout << str << endl;
+        return 1;
+    }
+
+    delete[] str;
     return 0;
 }
 
 char* parseFullTurn(char* cursor, defaultTurn& turn)
 {
+
+    if (*cursor == '0') {
+        cursor = parseCastling(cursor, turn);
+
+        if (cursor == NULL) {
+            return NULL;
+        }
+
+        return cursor;
+    }
 
     cursor = parseFigureType(cursor, turn);
 
@@ -142,6 +163,8 @@ char* parseTurnOutcome(char* cursor, defaultTurn& turn)
 {
     if (*cursor == ' ') {
         cursor++;
+    } else if (*cursor == '\n' || *cursor == '\0' || *cursor == '\r') {
+        return cursor;
     } else if (*cursor == '#') {
         cursor++;
         turn.turnOutcome = '#';
@@ -155,7 +178,44 @@ char* parseTurnOutcome(char* cursor, defaultTurn& turn)
 
     return cursor;
 }
- 
+
+char* parseCastling(char* cursor, defaultTurn& turn)
+{
+    int range = 0;
+
+    turn.turnType = 'C';
+    while (*cursor == '0') {
+        range++;
+        cursor += 2;
+    }
+    cursor--;
+
+    if (!checkCoordinatesCastling(turn, range)) {
+        return NULL;
+    }
+
+    return cursor;
+}
+
+bool checkCoordinatesCastling(defaultTurn& turn, const int range)
+{
+    turn.start.i = turn.startKingPos.i;
+    turn.start.j = turn.startKingPos.j;
+
+    if (range == 2) {
+        turn.end.i = turn.startKingPos.i;
+        turn.end.j = turn.start.j + (range + 1);
+    } else if (range == 3) {
+        turn.end.i = turn.startKingPos.i;
+        turn.end.j = turn.start.j - (range + 1);
+    } else {
+        cout << "unknow castling " << endl;
+        return false;
+    }
+    
+    return true;
+}
+
 char* skipSpace(char* cursor)
 {
     while (*cursor == ' ') {
