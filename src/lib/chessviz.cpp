@@ -135,29 +135,10 @@ bool check_corr_turnLength(defaultTurn turn)
     return true;
 }
 
-bool check_obstruction(const partturn start, const partturn end, const char arena[ARENA_SIZE][ARENA_SIZE])
-{
-    // завтра дописать.
-    int step = 1;
-
-    int size_w = abs(start.j - end.j);
-    int size_h = abs(start.i - end.i);
-
-    for (int i = 0; i < size_h; i += step) {
-        for (int j = 1; j < size_w; j += step) {
-            if (arena[i][j] != ' ') {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
 bool check_corr_border(defaultTurn turn)
 {
-    if (turn.end.i > ARENA_SIZE || turn.end.j > ARENA_SIZE
-        || turn.start.i > ARENA_SIZE || turn.start.j > ARENA_SIZE) {
+    if (turn.end.i >= ARENA_SIZE || turn.end.j >= ARENA_SIZE
+        || turn.start.i >= ARENA_SIZE || turn.start.j >= ARENA_SIZE) {
         cout << "attempt to go out of bounds" << endl;
         return false;
     }

@@ -5,7 +5,6 @@
 #include <cstring>
 #include <cctype>
 #include <cmath>
-#include <gtest.h>
 
 #define ARENA_SIZE 8
 
