@@ -17,7 +17,7 @@ int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int num__line)
         cout << "whites correct move error in " << num__line << " line" << endl;
         return 1;
     }
-    if (!check_winner(turn.wTurn)) {
+    if (check_winner(turn.wTurn)) {
         cout << "White winner" << endl;
         return 2;
     }
@@ -25,9 +25,9 @@ int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int num__line)
         cout << "blacks correct move error in " << num__line << " line" << endl;
         return 1;
     }
-    if (!check_winner(turn.bTurn)) {
+    if (check_winner(turn.bTurn)) {
         cout << "Black winner" << endl;
-        return 3;
+        return 2;
     }
     return 0;
 }
@@ -148,7 +148,7 @@ bool check_corr_border(defaultTurn turn)
 
 bool check_winner(defaultTurn turn)
 {
-    return turn.turnOutcome != '#';
+    return turn.turnOutcome == '#';
 }
 
 bool check_obstruction_castl(const defaultTurn turn, const char arena[ARENA_SIZE][ARENA_SIZE])
