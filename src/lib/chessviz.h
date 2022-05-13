@@ -5,6 +5,7 @@
 #include <cstring>
 #include <cctype>
 #include <cmath>
+#include <gtest.h>
 
 #define ARENA_SIZE 8
 
@@ -65,3 +66,4 @@ bool check_corr(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_border(defaultTurn turn);
 int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int num__line);
 bool check_winner(defaultTurn turn);
+bool check_obstruction_castl(const defaultTurn turn, const char arena[ARENA_SIZE][ARENA_SIZE]);
