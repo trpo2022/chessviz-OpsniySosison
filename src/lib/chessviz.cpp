@@ -169,12 +169,3 @@ bool check_obstruction_castl(const defaultTurn turn, const char arena[ARENA_SIZE
 
     return true;
 }
-
-bool check_winner(defaultTurn turn)
-{
-    return turn.turnOutcome != '#';
-
-    //if (turn.turnOutcome == '#') {
-    //    return false;
-    //}
-}

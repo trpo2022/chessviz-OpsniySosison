@@ -215,24 +215,6 @@ bool checkCoordinatesCastling(defaultTurn& turn, const int range)
     
     return true;
 }
-
-char* parseTurnOutcome(char* cursor, defaultTurn& turn)
-{
-    if (*cursor == ' ') {
-        cursor++;
-    } else if (*cursor == '#') {
-        cursor++;
-        turn.turnOutcome = '#';
-    } else if (*cursor == '+') {
-        cursor++;
-        turn.turnOutcome = '+';
-    } else {
-        cout << "unknow turn outcome '" << *cursor << "' " << endl;
-        return NULL;
-    }
-
-    return cursor;
-}
  
 char* skipSpace(char* cursor)
 {
