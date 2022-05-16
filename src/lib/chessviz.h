@@ -1,10 +1,10 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <cstring>
 #include <cctype>
 #include <cmath>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <string>
 
 #define ARENA_SIZE 8
 
@@ -40,7 +40,7 @@ struct turn {
 
 const char figureType[] = {'K', 'Q', 'R', 'N', 'B', 'P', '\0'};
 
-//parser functions
+// parser functions
 
 int parser(string stroke, turn& turn);
 char* parseFullTurn(char* cursor, defaultTurn& turn);
@@ -54,15 +54,17 @@ char* parseCastling(char* cursor, defaultTurn& turn);
 bool checkCoordinatesCastling(defaultTurn& turn, const int range);
 char* skipSpace(char* cursor);
 
-//chessviz functions
+// chessviz functions
 
 void print_arena(char arena[ARENA_SIZE][ARENA_SIZE]);
 int do_turn(defaultTurn turn, char (*arena)[ARENA_SIZE]);
-bool check_corr_figureType(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
+bool check_corr_figureType(
+        defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_turnType(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_turnLength(defaultTurn turn);
 bool check_corr(defaultTurn turn, char arena[ARENA_SIZE][ARENA_SIZE]);
 bool check_corr_border(defaultTurn turn);
 int make_a_turn(turn turn, char (*arena)[ARENA_SIZE], int num__line);
 bool check_winner(defaultTurn turn);
-bool check_obstruction_castl(const defaultTurn turn, const char arena[ARENA_SIZE][ARENA_SIZE]);
+bool check_obstruction_castl(
+        const defaultTurn turn, const char arena[ARENA_SIZE][ARENA_SIZE]);
