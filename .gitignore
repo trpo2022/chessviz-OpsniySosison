@@ -1,0 +1,25 @@
+
+# program compilation files
+
+chessviz.o
+main.o
+parser.o
+master
+chessviz.d
+parser.d
+main.d
+
+chessviz_test.d
+chessviz_test.o
+parser_test.o
+parser_test.d
+main_test.o
+main_test.d
+utest
+
+
+# visual studio working files
+
+.vs/
+
+# input data files
